@@ -9,11 +9,10 @@
 
     </body>
     <script>
-        const jsonUrl = {json_path};
+        const jsonUrl = "../data/test.json";
         d3.json(jsonUrl, function(error, data){
             if (error) return console.warn(error);
-            let layout = {barmode: 'stack'};
-            console.log(data)
+            let layout = {barmode: 'stack',legend:{traceorder:"normal"}};
             Plotly.newPlot('myDiv', data, layout)
         })
 
