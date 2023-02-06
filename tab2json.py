@@ -1,5 +1,13 @@
 # -*- encoding: utf-8 -*-
 import csv, json
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-i', '--input_f')
+parser.add_argument('-o', '--output_f')
+parser.add_argument('-s', '--samples', help='カンマ区切りサンプル名')
+args = parser.parse_args()
 
 
 def metagenomic_composition(input_f: str, samples:list) -> list:
@@ -38,11 +46,14 @@ def metagenomic_composition(input_f: str, samples:list) -> list:
 
 
 def plotly_json(input_f: str, output_f:str, samples:list):
-    d = metagenomic_composition(input_f, samples)
+    d = metagenomic_composition(input_f, sample_list(samples))
     with open(output_f, "w") as f:
         json.dump(d, f, indent=4)
 
 
+def sample_list(s:str) -> list:
+    return s.split(',')
+
+
 if __name__ == "__main__":
-    samples = ["H53G2DSXY_PG3460_759A5454", "H53G2DSXY_PG3460_761A5757", "H53G2DSXY_PG3460_767A6363"]
-    plotly_json("/Users/oec/Desktop/data/MDB/系統組成データ_plotly用_20230205/1269SampleGenusMajor.txt", "test_plotly.json", samples)
+    plotly_json(args.input_f, args.output_f, args.samples)
